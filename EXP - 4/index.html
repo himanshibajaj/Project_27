@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      text-align: center;
+      padding-top: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    input {
+      padding: 10px;
+      width: 200px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      border: none;
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      margin: 10px auto;
+      padding: 10px;
+      width: 300px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .delete {
+      background-color: #dc3545;
+    }
+    .delete:hover {
+      background-color: #b02a37;
+    }
+  </style>
+</head>
+<body>
+  <h1>User Management System</h1>
+  <input type="text" id="username" placeholder="Enter name" />
+  <button onclick="addUser()">Add User</button>
+
+  <h3>All Users</h3>
+  <ul id="userList"></ul>
+
+  <script>
+    const API = "http://localhost:4000/users";
+
+    async function fetchUsers() {
+      const res = await fetch(API);
+      const data = await res.json();
+      const list = document.getElementById("userList");
+      list.innerHTML = "";
+      data.forEach(user => {
+        const li = document.createElement("li");
+        li.textContent = user.name;
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete";
+        delBtn.classList.add("delete");
+        delBtn.onclick = () => deleteUser(user._id);
+        li.appendChild(delBtn);
+        list.appendChild(li);
+      });
+    }
+
+    async function addUser() {
+      const name = document.getElementById("username").value.trim();
+      if (!name) return alert("Please enter a name!");
+      await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name })
+      });
+      document.getElementById("username").value = "";
+      fetchUsers(); // refresh list
+    }
+
+    async function deleteUser(id) {
+      await fetch(`${API}/${id}`, { method: "DELETE" });
+      fetchUsers(); // refresh after delete
+    }
+
+    fetchUsers(); // Load users on start
+  </script>
+</body>
+</html>

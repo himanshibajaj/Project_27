@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>💬 Real-Time Chat</title>
+    <style>
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        text-align: center;
+        background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+        margin: 0;
+        padding: 0;
+      }
+
+      h2 {
+        margin-top: 30px;
+        color: #333;
+        font-size: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .chat-box {
+        background: white;
+        width: 60%;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      input {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      button {
+        padding: 10px 20px;
+        margin-left: 8px;
+        border: none;
+        background: #4caf50;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background: #43a047;
+      }
+
+      #messages {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+        text-align: left;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      #messages li {
+        background: #e8f5e9;
+        color: #333;
+        padding: 10px 15px;
+        margin: 8px;
+        border-radius: 10px;
+        width: fit-content;
+        max-width: 70%;
+        animation: fadeIn 0.4s;
+      }
+
+      #messages li:nth-child(even) {
+        background: #bbdefb;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>💬 Real-Time Chat</h2>
+
+    <div class="chat-box">
+      <input id="msg" placeholder="Type a message..." />
+      <button onclick="sendMessage()">Send</button>
+
+      <ul id="messages"></ul>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      function sendMessage() {
+        const message = document.getElementById("msg").value;
+        if (message.trim() === "") return;
+
+        socket.emit("chat message", message);
+        document.getElementById("msg").value = "";
+      }
+
+      socket.on("chat message", (msg) => {
+        const li = document.createElement("li");
+        li.textContent = msg;
+        document.getElementById("messages").appendChild(li);
+      });
+    </script>
+  </body>
+</html>

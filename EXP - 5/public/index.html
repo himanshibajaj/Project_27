@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🔒 Secure REST API</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(135deg, #c6e6ff, #8fc1ff);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 320px;
+    text-align: center;
+  }
+
+  h2 {
+    color: #222;
+    margin-bottom: 20px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    margin-top: 8px;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #registerBtn {
+    background-color: #007bff;
+  }
+
+  #registerBtn:hover {
+    background-color: #0056b3;
+  }
+
+  #loginBtn {
+    background-color: #28a745;
+  }
+
+  #loginBtn:hover {
+    background-color: #1e7e34;
+  }
+
+  .message {
+    margin-top: 15px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Secure REST API</h2>
+
+    <input type="text" id="username" placeholder="Username" />
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+
+    <button id="registerBtn" onclick="register()">Register</button>
+    <button id="loginBtn" onclick="login()">Login</button>
+
+    <p id="message" class="message"></p>
+  </div>
+
+  <script>
+    const apiUrl = "http://localhost:3000"; // Backend port
+
+    async function register() {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("message");
+
+      if (!username || !email || !password) {
+        msg.innerText = "Please fill all fields!";
+        msg.style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${apiUrl}/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password }),
+        });
+        const data = await res.json();
+        msg.innerText = data.message;
+        msg.style.color = "green";
+      } catch (err) {
+        msg.innerText = "Error connecting to server!";
+        msg.style.color = "red";
+      }
+    }
+
+    async function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const msg = document.getElementById("message");
+
+      if (!email || !password) {
+        msg.innerText = "Enter your email and password!";
+        msg.style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${apiUrl}/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        msg.innerText = data.message || "Login successful!";
+        msg.style.color = "green";
+      } catch (err) {
+        msg.innerText = "Error connecting to server!";
+        msg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>

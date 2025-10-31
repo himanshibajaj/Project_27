@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>API Test UI</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 40px;
+}
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+pre {
+  text-align: left;
+  background: #f4f4f4;
+  padding: 10px;
+  width: 60%;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+  <h2>REST API Testing</h2>
+  <button onclick="getUsers()">GET Users</button>
+  <button onclick="addUser()">POST User</button>
+  <button onclick="updateUser()">PUT User</button>
+  <button onclick="deleteUser()">DELETE User</button>
+  <pre id="output"></pre>
+
+<script>
+const baseUrl = "http://localhost:3000/users";
+
+async function getUsers() {
+  const res = await fetch(baseUrl);
+  document.getElementById("output").innerText = JSON.stringify(await res.json(), null, 2);
+}
+
+async function addUser() {
+  const res = await fetch(baseUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: 3, name: "Riya", email: "riya@vesit.com" })
+  });
+  document.getElementById("output").innerText = JSON.stringify(await res.json(), null, 2);
+}
+
+async function updateUser() {
+  const res = await fetch(baseUrl + "/2", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: 2, name: "Rajesh Updated", email: "rajesh@vesit.com" })
+  });
+  document.getElementById("output").innerText = JSON.stringify(await res.json(), null, 2);
+}
+
+async function deleteUser() {
+  const res = await fetch(baseUrl + "/1", { method: "DELETE" });
+  document.getElementById("output").innerText = JSON.stringify(await res.json(), null, 2);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Landing Page using Tailwind CSS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- ✅ NAVBAR SECTION -->
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold text-blue-600">TailwindUI</h1>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex space-x-6">
+        <a href="#" class="hover:text-blue-600 transition duration-300">Home</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">About</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Services</a>
+        <a href="#" class="hover:text-blue-600 transition duration-300">Contact</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden bg-blue-600 text-white px-3 py-1 rounded-lg">Menu</button>
+    </div>
+  </header>
+
+  <!-- ✅ HERO SECTION -->
+  <section class="flex flex-col md:flex-row justify-center items-center text-center md:text-left py-16 px-6 md:px-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
+    <div class="md:w-1/2">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Build Beautiful UIs Faster</h2>
+      <p class="text-lg mb-6">Tailwind CSS helps you create responsive, modern designs directly in your HTML. No custom CSS required.</p>
+      <button class="bg-white text-blue-600 font-semibold px-6 py-3 rounded-full hover:bg-blue-100 transition duration-300">Get Started</button>
+    </div>
+
+    <!-- Placeholder for layout symmetry -->
+    <div class="md:w-1/2 mt-8 md:mt-0">
+      <div class="bg-white bg-opacity-20 rounded-3xl p-8">
+        <h3 class="text-xl font-semibold mb-2">✨ Fast, Flexible, Fun</h3>
+        <p class="text-sm">Experiment with layouts, colors, and animations easily using Tailwind utilities.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ✅ FEATURES SECTION -->
+  <section class="py-16 px-6 md:px-20 bg-white">
+    <h2 class="text-3xl font-bold text-center mb-10">Why Choose Tailwind?</h2>
+
+    <!-- Responsive grid layout -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      
+      <!-- Feature 1 -->
+      <div class="p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 hover:scale-105">
+        <h3 class="text-xl font-semibold text-blue-600 mb-2">⚡ Speed</h3>
+        <p>Build modern UIs faster with ready-made utility classes.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 hover:scale-105">
+        <h3 class="text-xl font-semibold text-blue-600 mb-2">📱 Responsive</h3>
+        <p>Design layouts that automatically adjust for all screen sizes.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 hover:scale-105">
+        <h3 class="text-xl font-semibold text-blue-600 mb-2">🎨 Customizable</h3>
+        <p>Easily change colors, spacing, and components using Tailwind config.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ✅ FOOTER SECTION -->
+  <footer class="bg-gray-900 text-gray-300 py-6 text-center">
+    <p>© 2025 TailwindUI Experiment | Built by Himanshi Bajaj</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔐 JWT Authentication</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #b5e3ff, #f0faff);
+    }
+
+    .container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 320px;
+    }
+
+    h2 {
+      color: #222;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #loginBtn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    #loginBtn:hover {
+      background-color: #218838;
+    }
+
+    .msg {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔐 Secure REST API (JWT)</h2>
+    <input type="text" id="username" placeholder="Enter Username" />
+    <input type="password" id="password" placeholder="Enter Password" />
+    <button id="loginBtn" onclick="login()">Login</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const msgDiv = document.getElementById('msg');
+      msgDiv.innerHTML = "";
+
+      if (!username || !password) {
+        msgDiv.innerHTML = "⚠️ Please fill all fields.";
+        msgDiv.className = "msg error";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:4000/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          msgDiv.innerHTML = `✅ ${data.message}`;
+          msgDiv.className = "msg success";
+
+          localStorage.setItem("token", data.token);
+
+          // Fetch protected dashboard
+          const dash = await fetch("http://localhost:4000/api/dashboard", {
+            headers: { Authorization: `Bearer ${data.token}` }
+          });
+          const dashData = await dash.json();
+
+          msgDiv.innerHTML += `<br>🎉 ${dashData.message}`;
+        } else {
+          msgDiv.innerHTML = `❌ ${data.message}`;
+          msgDiv.className = "msg error";
+        }
+      } catch (err) {
+        msgDiv.innerHTML = "⚠️ Server not reachable!";
+        msgDiv.className = "msg error";
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>

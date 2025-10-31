@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f6fb;
+  transition: background-color 0.3s ease;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  transition: all 0.4s ease;
+}
+
+.app.dark {
+  background-color: #0f172a;
+  color: white;
+}
+
+.app.light {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.title {
+  font-size: 2rem;
+  color: #2563eb;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.card {
+  padding: 20px 40px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #111827;
+  transition: transform 0.3s;
+}
+
+.app.dark .card {
+  background: #1e293b;
+  color: white;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.toggle-btn {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
